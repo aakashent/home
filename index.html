@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Repositories</title>
+    <title>Aakashent Links Hub</title>
     <style>
+        :root {
+            color-scheme: light;
+            --bg: #f5f7fb;
+            --bg-accent: #e9effa;
+            --card: #ffffff;
+            --text: #1b2233;
+            --muted: #5f6b83;
+            --primary: #3366ff;
+            --primary-dark: #2447b3;
+            --border: #dfe5f2;
+            --shadow: 0 20px 45px rgba(31, 42, 85, 0.12);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,83 +25,230 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
+            font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top, var(--bg-accent), var(--bg));
+            color: var(--text);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #333;
+            padding: 48px 20px 64px;
         }
 
-        .container {
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .buttons {
+        .page {
+            width: min(1100px, 100%);
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            align-items: center;
+            gap: 32px;
         }
 
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2rem;
-            cursor: pointer;
+        header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        header h1 {
+            font-size: clamp(2.2rem, 2.8vw, 3rem);
+        }
+
+        header p {
+            max-width: 680px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .info-banner {
+            background: #eff3ff;
+            border: 1px solid #d9e2ff;
+            padding: 14px 16px;
+            border-radius: 14px;
+            color: #2e3a68;
+            font-size: 0.95rem;
+        }
+
+        .sections {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        section {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        section p {
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 16px;
+        }
+
+        .link-card {
+            background: #f9fbff;
+            border-radius: 18px;
+            padding: 18px;
+            border: 1px solid #e5ecff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             text-decoration: none;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            max-width: 300px;
-            text-align: center;
+            color: inherit;
+            min-height: 140px;
         }
 
-        .button:hover {
-            background-color: #45a049;
+        .link-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 30px rgba(50, 80, 150, 0.18);
+            border-color: #cbd8ff;
         }
 
-        @media (min-width: 768px) {
-            .buttons {
-                flex-direction: row;
-            }
+        .link-card span {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
 
-            .button {
-                max-width: none;
-                width: 200px;
-            }
+        .link-card small {
+            color: var(--muted);
+        }
+
+        .link-card .cta {
+            margin-top: auto;
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         footer {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: #888;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            color: var(--primary-dark);
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 36px 16px 48px;
+            }
+
+            section {
+                padding: 22px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>My GitHub Projects</h1>
-        <div class="buttons">
-            <a href="https://aakashent.github.io/accurx_text_maker/" class="button">Accurx Text Maker</a>
-            <a href="https://aakashent.github.io/ent-questionnaires/" class="button">ENT Questionnaires</a>
-        </div>
-        <p></p>
-        <h2>Useful Websites</h2>
-        <div class="buttons">
-            <a href="https://suddenhearingloss.shinyapps.io/recovery/" class="button">SSNHL Prognosis Calculator</a>
+    <main class="page">
+        <header>
+            <h1>Aakashent Links Hub</h1>
+            <p>Quick access to my projects and tools. New pages can be added by editing the <strong>sections</strong> list in the script below.</p>
+        </header>
+
+        <div class="info-banner">
+            ✨ Tip: To add another page, duplicate a link entry inside the <code>sections</code> array and the layout updates automatically.
         </div>
 
-        <footer>Created by Aakashent</footer>
-    </div>
+        <div id="sections" class="sections"></div>
+
+        <footer>
+            <span>Created by Aakashent</span>
+            <a href="https://github.com/aakashent" rel="noopener">Visit GitHub</a>
+        </footer>
+    </main>
+
+    <script>
+        const sections = [
+            {
+                title: "GitHub Projects",
+                description: "Featured repositories and experiments.",
+                links: [
+                    {
+                        label: "Accurx Text Maker",
+                        url: "https://aakashent.github.io/accurx_text_maker/",
+                        detail: "Shortcut-driven message builder for clinic workflows."
+                    },
+                    {
+                        label: "ENT Questionnaires",
+                        url: "https://aakashent.github.io/ent-questionnaires/",
+                        detail: "Patient-friendly forms with streamlined navigation."
+                    }
+                ]
+            },
+            {
+                title: "Useful Websites",
+                description: "Clinical calculators and utilities.",
+                links: [
+                    {
+                        label: "SSNHL Prognosis Calculator",
+                        url: "https://suddenhearingloss.shinyapps.io/recovery/",
+                        detail: "Estimate recovery outcomes for sudden hearing loss."
+                    }
+                ]
+            }
+        ];
+
+        const sectionsRoot = document.getElementById("sections");
+
+        sections.forEach((section) => {
+            const sectionEl = document.createElement("section");
+            const title = document.createElement("h2");
+            const description = document.createElement("p");
+            const grid = document.createElement("div");
+
+            title.textContent = section.title;
+            description.textContent = section.description;
+            grid.className = "card-grid";
+
+            section.links.forEach((link) => {
+                const card = document.createElement("a");
+                const label = document.createElement("span");
+                const detail = document.createElement("small");
+                const cta = document.createElement("div");
+
+                card.className = "link-card";
+                card.href = link.url;
+                card.rel = "noopener";
+                card.target = "_blank";
+
+                label.textContent = link.label;
+                detail.textContent = link.detail;
+                cta.className = "cta";
+                cta.innerHTML = "Open page →";
+
+                card.append(label, detail, cta);
+                grid.appendChild(card);
+            });
+
+            sectionEl.append(title, description, grid);
+            sectionsRoot.appendChild(sectionEl);
+        });
+    </script>
 </body>
 </html>
