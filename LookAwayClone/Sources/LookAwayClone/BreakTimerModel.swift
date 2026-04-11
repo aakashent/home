@@ -10,7 +10,8 @@ final class BreakTimerModel: ObservableObject {
     @Published var secondsRemaining: Int = 20 * 60
     @Published var isBreakActive = false
 
-    private var task: Task<Void, Never>?
+    private var focusTask: Task<Void, Never>?
+    private var breakTask: Task<Void, Never>?
 
     var progress: Double {
         let total = max(1, Int(focusMinutes * 60))
@@ -29,17 +30,26 @@ final class BreakTimerModel: ObservableObject {
 
     func start() {
         guard !isRunning else { return }
+
+        breakTask?.cancel()
+        breakTask = nil
+
+        focusTask?.cancel()
+
         isRunning = true
 
-        task = Task {
+        focusTask = Task { [weak self] in
+            guard let self else { return }
+
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(1))
-                guard isRunning, !isBreakActive else { continue }
+                guard !Task.isCancelled else { return }
+                guard self.isRunning, !self.isBreakActive else { continue }
 
-                if secondsRemaining > 0 {
-                    secondsRemaining -= 1
+                if self.secondsRemaining > 0 {
+                    self.secondsRemaining -= 1
                 } else {
-                    beginBreak()
+                    self.beginBreak()
                 }
             }
         }
@@ -50,11 +60,17 @@ final class BreakTimerModel: ObservableObject {
     }
 
     func resetForFocusBlock() {
+        breakTask?.cancel()
+        breakTask = nil
+
         secondsRemaining = Int(focusMinutes * 60)
         isBreakActive = false
     }
 
     func skipBreak() {
+        breakTask?.cancel()
+        breakTask = nil
+
         isBreakActive = false
         resetForFocusBlock()
         start()
@@ -62,18 +78,27 @@ final class BreakTimerModel: ObservableObject {
 
     func beginBreak() {
         guard !isBreakActive else { return }
+
+        focusTask?.cancel()
+        focusTask = nil
+
         isBreakActive = true
         isRunning = false
 
         NSSound.beep()
 
-        Task {
-            try? await Task.sleep(for: .seconds(Int(breakSeconds)))
-            skipBreak()
+        breakTask?.cancel()
+        breakTask = Task { [weak self] in
+            guard let self else { return }
+
+            try? await Task.sleep(for: .seconds(Int(self.breakSeconds)))
+            guard !Task.isCancelled, self.isBreakActive else { return }
+            self.skipBreak()
         }
     }
 
     deinit {
-        task?.cancel()
+        focusTask?.cancel()
+        breakTask?.cancel()
     }
 }
